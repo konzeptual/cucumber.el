@@ -45,7 +45,7 @@
 ;;
 
 (defconst feature-mode-keywords
-  '("Feature" "Scenario", "Given", "Then", "When", "And"))
+  '("Feature", "Scenario", "Given", "Then", "When", "And"))
 
 (cond
  ((featurep 'font-lock)
@@ -54,24 +54,35 @@
  (set (make-local-variable 'font-lock-syntax-table) feature-font-lock-syntax-table))
 
 (defconst feature-blank-line-re "^[[:space:]]*\\(#.*\\)?$")
-(defconst feature-0-indent-re "^[[:space:]]*\\(Feature\\|Background\\|Scenario\\(?: Outline\\)?\\):")
-(defconst feature-1-indent-re "^[[:space:]]*\\(Given\\|When\\|Then\\|But\\|\\(?:More \\)?Examples:\\)")
-(defconst feature-2-indent-re "^[[:space:]]*\\(And\\)")
+(defconst feature-0-indent-re "^[[:space:]]*\\(Feature\\|Функционал\\|Сценарий\\|Background\\|Предыстория\\|Scenario\\(?: Outline\\)?\\|Структура\\(?: Сценария\\)?\\):")
+(defconst feature-1-indent-re "^[[:space:]]*\\(Given\\|Допустим\\|When\\|Если\\|Then\\|То\\|But\\|\\(?:More \\)?Examples:\\)")
+(defconst feature-2-indent-re "^[[:space:]]*\\(And\\|И\\)")
 (defconst feature-3-indent-re "^[[:space:]]*\\(|\\|\"\"\"\\)")
 
 (defconst feature-font-lock-keywords
   (list
    '("^[[:space:]]*Feature:" (0 font-lock-keyword-face) (".*" nil nil (0 font-lock-type-face t)))
+   '("^[[:space:]]*Функционал:" (0 font-lock-keyword-face) (".*" nil nil (0 font-lock-type-face t)))
+   '("^[[:space:]]*Сценарий:" (0 font-lock-keyword-face) (".*" nil nil (0 font-lock-type-face t)))
    '("^[[:space:]]*In order" . font-lock-keyword-face)
+   '("^[[:space:]]*Чтобы" . font-lock-keyword-face)
    '("^[[:space:]]*As an" . font-lock-keyword-face)
+   '("^[[:space:]]*Как" . font-lock-keyword-face)
    '("^[[:space:]]*I want" . font-lock-keyword-face)
+   '("^[[:space:]]*Я хочу" . font-lock-keyword-face)
    '("^[[:space:]]*Background:$" (0 font-lock-keyword-face))
+   '("^[[:space:]]*Предыстория:$" (0 font-lock-keyword-face))
    '("^[[:space:]]*Scenario\\(?: Outline\\)?:" (0 font-lock-keyword-face) (".*" nil nil (0 font-lock-function-name-face t)))
+   '("^[[:space:]]*Структура\\(?: Сценария\\)?:" (0 font-lock-keyword-face) (".*" nil nil (0 font-lock-function-name-face t)))
    '("^[[:space:]]*Given" . font-lock-keyword-face)
+   '("^[[:space:]]*Допустим" . font-lock-keyword-face)
    '("^[[:space:]]*When" . font-lock-keyword-face)
+   '("^[[:space:]]*Если" . font-lock-keyword-face)
    '("^[[:space:]]*Then" . font-lock-keyword-face)
+   '("^[[:space:]]*То" . font-lock-keyword-face)
    '("^[[:space:]]*But" . font-lock-keyword-face)
    '("^[[:space:]]*And" . font-lock-keyword-face)
+   '("^[[:space:]]*И" . font-lock-keyword-face)
    '("^[[:space:]]*@.*" . font-lock-preprocessor-face)
    '("^[[:space:]]*\\(?:More \\)?Examples:" . font-lock-keyword-face)
    '("^[[:space:]]*#.*" 0 font-lock-comment-face t)
@@ -131,7 +142,7 @@
   (setq comment-start-skip "#+ *")
   (setq comment-end "")
   (setq parse-sexp-ignore-comments t)
-  (set (make-local-variable 'font-lock-defaults) '((feature-font-lock-keywords) nil nil nil 'beginning-of-line))
+  (set (make-local-variable 'font-lock-defaults) '((feature-font-lock-keywords) nil nil nil beginning-of-line))
   (set (make-local-variable 'font-lock-keywords) feature-font-lock-keywords))
 
 (defun feature-minor-modes ()
